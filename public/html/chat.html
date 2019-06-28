@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+
+    <title>Chat</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="js/runChat.js"></script>
+
+</head>
+
+<body>
+    <div class="header">
+
+    </div>
+    <script>
+        //  var socket = io();
+        socket.on('numUsers', function(numUsers) {
+            document.getElementById("numUsers").innerHTML = numUsers;
+        })
+    </script>
+
+    <br/>
+    <p>welcome chat, persons online: <u id="numUsers"></u></p>
+
+    <div class="messagewindow">
+
+        <ul id="messages"></ul>
+    </div>
+    <div class="sidebar">
+        <a id="homeButton" href="/logout"> LogOut</a>
+        <br>
+        <td>Online:
+            <ul id="onlineUsers"></ul>
+        </td>
+    </div>
+
+
+
+    <div class="footer">
+        <form action="">
+            <a>to send private message write #nick:</a>
+            <input id="m"><button>Send</button>
+        </form>
+    </div>
+
+
+
+</body>
+
+</html>
