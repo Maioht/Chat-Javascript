@@ -34,23 +34,23 @@ app.use(expressSession({
 io.on('connection', function(socket) {
     socket.on('chat message', function(msg) {
         if (msg.to != null) {
-            var chatUser = _.find(chatUsers, function(chatUser) {
+            let chatUser = _.find(chatUsers, function(chatUser) {
                 return chatUser.username === msg.to;
             });
             if (chatUser != null) {
-                var message = { timestamp: getCurrentDate(), username: msg.username, message: msg.message };
+                let message = { timestamp: getCurrentDate(), username: msg.username, message: msg.message };
                 io.to(chatUser.socketId).emit('private chat', message);
                 return;
             }
         }
-        var messageToAll = { chat: 'say to all', timestamp: getCurrentDate(), username: msg.username, message: msg.message };
+        let messageToAll = { chat: 'say to all', timestamp: getCurrentDate(), username: msg.username, message: msg.message };
         io.emit('chat message', messageToAll);
     });
 });
 
 //CHAT event listener - counter
-var numUsers = 0;
-var chatUsers = [];
+let numUsers = 0;
+let chatUsers = [];
 io.on('connection', (socket) => {
     ++numUsers
     socket.emit('numUsers', numUsers);
@@ -67,7 +67,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('chat user', (msg) => {
-        var chatUser = { username: msg, socketId: socket.id };
+        let chatUser = { username: msg, socketId: socket.id };
         chatUsers.push(chatUser);
         console.log(chatUsers);
         //set intervall update to userlist 
@@ -79,13 +79,13 @@ io.on('connection', (socket) => {
 
 //add chat timestamp, could use moment.js library
 function getCurrentDate() {
-    var currentDate = new Date();
-    var day = (currentDate.getDate() < 10 ? '0' : '') + currentDate.getDate();
-    var month = ((currentDate.getMonth() + 1) < 10 ? '0' : '') + (currentDate.getMonth() + 1);
-    var year = currentDate.getFullYear();
-    var hour = (currentDate.getHours() < 10 ? '0' : '') + currentDate.getHours();
-    var minute = (currentDate.getMinutes() < 10 ? '0' : '') + currentDate.getMinutes();
-    var second = (currentDate.getSeconds() < 10 ? '0' : '') + currentDate.getSeconds();
+    let currentDate = new Date();
+    let day = (currentDate.getDate() < 10 ? '0' : '') + currentDate.getDate();
+    let month = ((currentDate.getMonth() + 1) < 10 ? '0' : '') + (currentDate.getMonth() + 1);
+    let year = currentDate.getFullYear();
+    let hour = (currentDate.getHours() < 10 ? '0' : '') + currentDate.getHours();
+    let minute = (currentDate.getMinutes() < 10 ? '0' : '') + currentDate.getMinutes();
+    let second = (currentDate.getSeconds() < 10 ? '0' : '') + currentDate.getSeconds();
     return day + "." + month + "." + year + " " + hour + ":" + minute + ":" + second;
 
 }
