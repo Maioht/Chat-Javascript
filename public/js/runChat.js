@@ -1,21 +1,21 @@
 //chat running, Socket example uses also jquery
-var socket = io();
+const socket = io();
 
 function runChat() {
 
     $('form').submit(function() {
-        var msg = $('#m').val();
-        var toUser = null;
+        let msg = $('#m').val();
+        let toUser = null;
         if (msg.startsWith('#')) {
-            var idx = msg.indexOf(':');
+            let idx = msg.indexOf(':');
             toUser = msg.substring(1, idx);
             msg = msg.substring(idx + 1);
 
-            var message = toUser + ": " + msg;
+            let message = toUser + ": " + msg;
             $('#messages').append($('<li>').text(message));
             window.scrollTo(0, document.body.scrollHeight);
         }
-        var session = JSON.parse(sessionStorage.getItem('session'));
+        let session = JSON.parse(sessionStorage.getItem('session'));
         socket.emit('chat message', { to: toUser, 'username': session.username, 'message': msg, 'timestamp': new Date() });
         $('#m').val('');
         return false;
@@ -27,13 +27,13 @@ function runChat() {
     });
 
     socket.on('chat message', function(msg) {
-        var message = "[ " + msg.timestamp + " ]. " + msg.username + ", #" + msg.chat + ": " + msg.message;
+        let message = "[ " + msg.timestamp + " ]. " + msg.username + ", #" + msg.chat + ": " + msg.message;
         $('#messages').append($('<li>').text(message));
         window.scrollTo(0, document.body.scrollHeight);
     });
 
     socket.on('private chat', function(msg) {
-        var message = "[ " + msg.timestamp + " ], " + msg.username + ": " + msg.message;
+        let message = "[ " + msg.timestamp + " ], " + msg.username + ": " + msg.message;
         $('#messages').append($('<li>').text(message));
         window.scrollTo(0, document.body.scrollHeight);
     });
@@ -44,7 +44,7 @@ function runChat() {
 socket.on('chat usersList', function(chatUsers) {
     $('#onlineUsers').empty();
     for (idx = 0; idx < chatUsers.length; idx++) {
-        var chatUser = chatUsers[idx];
+        let chatUser = chatUsers[idx];
         $('#onlineUsers').append($('<li>').text(chatUser.username));
     };
 });
